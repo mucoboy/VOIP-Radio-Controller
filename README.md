@@ -2,5 +2,6 @@
 You can use this software to check your VOIP Transmitter and Receiver Radios. 
 After starting SIP session on TX, you can send your audio to radio by clicking PTT button.
 After starting SIP session on RX, you can hear the audio of your receiver if there is any audio.
+To use directly, please download "Voip Radio Controller.rar" file.
 Special thanks to NAudio Library : https://github.com/naudio/NAudio
 Special thanks to Alaw Decoder/Encoder : https://www.codeproject.com/Articles/14237/Using-the-G711-standard
