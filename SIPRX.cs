@@ -1,4 +1,4 @@
-﻿using g711audio;
+﻿using NAudio.Codecs;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
@@ -127,9 +127,17 @@ namespace VOIP_Radio_Controller
                     //20 bytes header and 160 bytes data
                     if (receivedRtpBytes.Length == 180)
                     {
-
+                        //decode data then convert from byte to short
                         Array.Copy(receivedRtpBytes, 20, rawData, 0, 160);
-                        ALawDecoder.ALawDecode(rawData, out byte[] decoded);
+                        var decoded = new byte[rawData.Length * 2];
+                        
+                        for (int i = 0; i < rawData.Length; i++)
+                        {
+                            var sample = ALawDecoder.ALawToLinearSample(rawData[i]);
+                            decoded[i * 2] = (byte)sample;
+                            decoded[i * 2 + 1] = (byte)(sample >> 8);
+                        }
+
                         bwp.AddSamples(decoded, 0, decoded.Length);
                         connection.onAudioReceived();
                     }

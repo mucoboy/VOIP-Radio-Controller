@@ -72,8 +72,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ALawDecoder.cs" />
-    <Compile Include="ALawEncoder.cs" />
     <Compile Include="IConnectionRX.cs" />
     <Compile Include="IConnectionTX.cs" />
     <Compile Include="SIPRX.cs" />

@@ -1,4 +1,4 @@
-﻿using g711audio;
+﻿using NAudio.Codecs;
 using NAudio.Wave;
 using System;
 using System.Collections.Generic;
@@ -195,8 +195,19 @@ namespace VOIP_Radio_Controller
         {
             try
             {
-                //Encode to Alaw via open source AlawEncoder library
-                var encoded = ALawEncoder.ALawEncode(e.Buffer);
+                //we will convert the buffer from short to byte, so it must be even
+                if (e.Buffer.Length % 2 != 0)
+                    return;
+
+                //encode data then convert to byte from short
+                var encoded = new byte[e.Buffer.Length/2];
+
+                for(int i = 0; i < e.Buffer.Length; i+=2)
+                {
+                    var sample = ALawEncoder.LinearToALawSample((short)(e.Buffer[i+1]*256+e.Buffer[i]));
+                    encoded[i / 2] = sample;
+                }
+
 
                 byte[] header = new byte[20];//160 bit
                 header[0] = 144;//ext
